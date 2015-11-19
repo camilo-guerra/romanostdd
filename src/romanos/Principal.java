@@ -5,6 +5,12 @@
  */
 package romanos;
 
+import java.awt.Container;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author lis
@@ -16,10 +22,21 @@ Conversor c = new Conversor();
      */
     public Principal() {
         initComponents();
-        jLResult.setVisible(false);
-        jLResult1.setVisible(false);
-        jLresult2.setVisible(false);
-        jLresultQuest.setVisible(false);
+        setVisibility(false);
+        
+        jTPlaceHolder.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent ke) { 
+                char cha =ke.getKeyChar(); 
+                if(!Character.isDigit(cha)) {
+                    getToolkit().beep();
+                    ke.consume();  
+                }
+                if(jTPlaceHolder.getText().length() >3){
+                    ke.consume();
+                    JOptionPane.showMessageDialog(null,"El numero no puede ser mayor a 1000", "Error", JOptionPane.WARNING_MESSAGE);  
+                }
+            } 
+        });
         
         
     }
@@ -35,11 +52,12 @@ Conversor c = new Conversor();
 
         jLIntruccion = new javax.swing.JLabel();
         jTPlaceHolder = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jBConvertir = new javax.swing.JButton();
         jLResult1 = new javax.swing.JLabel();
         jLresultQuest = new javax.swing.JLabel();
         jLresult2 = new javax.swing.JLabel();
         jLResult = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Conversor");
@@ -49,7 +67,7 @@ Conversor c = new Conversor();
 
         jLIntruccion.setText("Ingrese el numero arabico  que desea convertir a numero romano");
         getContentPane().add(jLIntruccion);
-        jLIntruccion.setBounds(10, 10, 450, 17);
+        jLIntruccion.setBounds(10, 10, 415, 15);
 
         jTPlaceHolder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -57,32 +75,36 @@ Conversor c = new Conversor();
             }
         });
         getContentPane().add(jTPlaceHolder);
-        jTPlaceHolder.setBounds(10, 40, 370, 27);
+        jTPlaceHolder.setBounds(10, 70, 370, 25);
 
-        jButton1.setText("Convertir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBConvertir.setText("Convertir");
+        jBConvertir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBConvertirActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(400, 40, 100, 29);
+        getContentPane().add(jBConvertir);
+        jBConvertir.setBounds(400, 70, 100, 27);
 
         jLResult1.setText("El numero: ");
         getContentPane().add(jLResult1);
-        jLResult1.setBounds(10, 80, 90, 17);
+        jLResult1.setBounds(10, 110, 90, 15);
 
         jLresultQuest.setText("jLabel3");
         getContentPane().add(jLresultQuest);
-        jLresultQuest.setBounds(100, 80, 49, 17);
+        jLresultQuest.setBounds(100, 110, 44, 15);
 
         jLresult2.setText("en numeros romanos es:");
         getContentPane().add(jLresult2);
-        jLresult2.setBounds(190, 80, 180, 17);
+        jLresult2.setBounds(190, 110, 180, 15);
 
         jLResult.setText("jLabel5");
         getContentPane().add(jLResult);
-        jLResult.setBounds(10, 110, 350, 17);
+        jLResult.setBounds(10, 140, 350, 15);
+
+        jLabel1.setText("Recuerde que solo se pueden ingresar numeros");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(10, 40, 410, 15);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -91,19 +113,27 @@ Conversor c = new Conversor();
         // TODO add your handling code here:
     }//GEN-LAST:event_jTPlaceHolderActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    
+        /**
+     * Realizamos las acciones del boton
+     */
+    private void jBConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConvertirActionPerformed
         // TODO add your handling code here:
         
-        String numero = jTPlaceHolder.getText();        
-        jLresultQuest.setText(numero);
-        String resultado = c.romanoDe(numero);
-        c.probar();
-         jLResult.setVisible(true);
-         jLResult.setText(resultado);
-        jLResult1.setVisible(true);
-        jLresult2.setVisible(true);
-        jLresultQuest.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String numero = jTPlaceHolder.getText();    //Obtenemos el numero como un txt
+        int value = Integer.parseInt(numero);
+        if((numero.trim().equals("")) || (1000<value)){               //Comprobamos que el campo no este vacio y restringimos el valor maximo
+            JOptionPane.showMessageDialog(null,"El numero no puede ser vacio o mayor a 1000", "Error", JOptionPane.WARNING_MESSAGE);
+
+            return;
+        }
+        jLresultQuest.setText(numero);                      
+        String resultado = c.romanoDe(numero);                  //Obtenemos el Valor del numero a numeros romanos    
+        c.probar();                                 //probamos en consola todos los numeros
+         jLResult.setText(resultado);               
+         setVisibility(true);                       //ponemos la visibilidad 
+
+    }//GEN-LAST:event_jBConvertirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,12 +169,25 @@ Conversor c = new Conversor();
             }
         });
     }
+    
+        /**
+     * Establecemos la visibilidad de los resultados
+     */
+    
+    public void setVisibility(Boolean b){
+                jLResult.setVisible(b);
+        jLResult1.setVisible(b);
+        jLresult2.setVisible(b);
+        jLresultQuest.setVisible(b);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBConvertir;
     private javax.swing.JLabel jLIntruccion;
     private javax.swing.JLabel jLResult;
     private javax.swing.JLabel jLResult1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLresult2;
     private javax.swing.JLabel jLresultQuest;
     private javax.swing.JTextField jTPlaceHolder;
