@@ -62,7 +62,6 @@ public class ConversorTest {
     @Test
     public void romano_1(){
         System.out.println("romanoDe 1");
-        String numero = "1";
         String result = instance.romanoDe("1");
         assertEquals("I", result);
         
@@ -74,7 +73,6 @@ public class ConversorTest {
     @Test
     public void romano_4(){
         System.out.println("romanoDe 4");
-        String numero = "1";
         String result = instance.romanoDe("4");
         assertEquals("IV", result);
         
@@ -86,9 +84,14 @@ public class ConversorTest {
     @Test
     public void romano_9(){
         System.out.println("romanoDe 9");
-        String numero = "1";
         String result = instance.romanoDe("9");
         assertEquals("IX", result);
+        
+    }
+        public void romano_99(){
+        System.out.println("romanoDe 99");
+        String result = instance.romanoDe("99");
+        assertEquals("XCIX", result);
         
     }
     

@@ -129,7 +129,6 @@ Conversor c = new Conversor();
         }
         jLresultQuest.setText(numero);                      
         String resultado = c.romanoDe(numero);                  //Obtenemos el Valor del numero a numeros romanos    
-        c.probar();                                 //probamos en consola todos los numeros
          jLResult.setText(resultado);               
          setVisibility(true);                       //ponemos la visibilidad 
 
