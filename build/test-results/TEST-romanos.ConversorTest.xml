@@ -1,0 +1,14 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="romanos.ConversorTest" tests="4" failures="0" errors="0" timestamp="2015-11-28T15:25:09" hostname="localhost.localdomain" time="0.026">
+  <properties/>
+  <testcase name="romano_1" classname="romanos.ConversorTest" time="0.02"/>
+  <testcase name="romano_4" classname="romanos.ConversorTest" time="0.001"/>
+  <testcase name="romano_9" classname="romanos.ConversorTest" time="0.001"/>
+  <testcase name="testRomanoDe" classname="romanos.ConversorTest" time="0.001"/>
+  <system-out><![CDATA[romanoDe 1
+romanoDe 4
+romanoDe 9
+romanoDe Cualquiera
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
